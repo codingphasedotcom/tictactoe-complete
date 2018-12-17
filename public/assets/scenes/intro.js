@@ -5,6 +5,7 @@ export default class Intro extends Phaser.Scene {
 		});
 	}
 	preload() {
+		this.load.audio('intro_music', ['/assets/music/01-Opening.ogg']);
 		this.load.image('background', '/assets/sprites/titlescreen/background.png');
 		this.load.image('bgbox', '/assets/sprites/titlescreen/bgbox.png');
 		this.load.image('title', '/assets/sprites/titlescreen/title.png');
@@ -39,6 +40,16 @@ export default class Intro extends Phaser.Scene {
 		});
 	}
 	create() {
+		this.intro_music = this.sound.add('intro_music', {
+			mute: false,
+			volume: 1,
+			rate: 1,
+			detune: 0,
+			seek: 0,
+			loop: true,
+			delay: 0
+		});
+		// this.intro_music.play();
 		this.background = this.add.image(0, 0, 'background').setOrigin(0, 0);
 		this.bgbox = this.add
 			.image(0, 0, 'bgbox')
@@ -56,11 +67,10 @@ export default class Intro extends Phaser.Scene {
 		this.tictactoe = this.add
 			.image(this.game.config.width / 2, 230, 'tictactoe')
 			.setAlpha(0);
-		this.startbutton = this.add.image(
-			this.game.config.width / 2,
-			250,
-			'startbutton'
-		);
+		this.startbutton = this.add
+			.image(this.game.config.width / 2, 250, 'startbutton')
+			.setAlpha(0);
+
 		this.bgboxTween = this.tweens.timeline({
 			targets: this.bgbox,
 			ease: 'Linear', // 'Cubic', 'Elastic', 'Bounce', 'Back'
@@ -91,7 +101,7 @@ export default class Intro extends Phaser.Scene {
 					ease: 'Linear',
 					duration: 600,
 					repeat: 0,
-					delay: 1000 // -1: infinity
+					delay: 500 // -1: infinity
 					// yoyo: false,
 					// offset: '-=500',   // starts 500ms before previous tween ends
 				},
@@ -144,10 +154,31 @@ export default class Intro extends Phaser.Scene {
 				}
 			]
 		});
-		this.keys = this.input.keyboard.addKeys('SPACE');
+		this.tweens.timeline({
+			targets: this.startbutton,
+			ease: 'Linear', // 'Cubic', 'Elastic', 'Bounce', 'Back'
+			loop: 0,
+			tweens: [
+				{
+					alpha: 1,
+					ease: 'Linear',
+					duration: 500,
+					repeat: 0,
+					delay: 1900 // -1: infinity
+					// yoyo: false,
+					// offset: '-=500',   // starts 500ms before previous tween ends
+				}
+			]
+		});
+		this.keys = this.input.keyboard.addKeys('ENTER,SPACE');
+
+		this.startbutton.setInteractive().on('pointerdown', () => {
+			this.intro_music.stop();
+			this.scene.start('Level1');
+		});
 	}
 	update(delta) {
-		if (this.keys.SPACE.isDown) {
+		if (this.keys.SPACE.isDown || this.keys.ENTER.isDown) {
 			this.scene.start('Level1');
 		}
 	}
