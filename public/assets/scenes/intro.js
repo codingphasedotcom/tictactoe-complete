@@ -49,7 +49,7 @@ export default class Intro extends Phaser.Scene {
 			loop: true,
 			delay: 0
 		});
-		// this.intro_music.play();
+		this.intro_music.play();
 		this.background = this.add.image(0, 0, 'background').setOrigin(0, 0);
 		this.bgbox = this.add
 			.image(0, 0, 'bgbox')
