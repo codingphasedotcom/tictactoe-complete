@@ -21,7 +21,7 @@ var config = {
 			}
 		}
 	},
-	scene: [Level1],
+	scene: [Intro, Level1],
 	callbacks: {
 		postBoot: function(game) {
 			var config = game.config;

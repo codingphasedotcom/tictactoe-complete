@@ -5,7 +5,7 @@ export default class Intro extends Phaser.Scene {
 		});
 	}
 	preload() {
-		this.load.audio('intro_music', ['/assets/music/01-Opening.ogg']);
+		this.load.audio('intro_music', ['/assets/audio/01-Opening.ogg']);
 		this.load.image('background', '/assets/sprites/titlescreen/background.png');
 		this.load.image('bgbox', '/assets/sprites/titlescreen/bgbox.png');
 		this.load.image('title', '/assets/sprites/titlescreen/title.png');
